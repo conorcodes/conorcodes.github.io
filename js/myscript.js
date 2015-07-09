@@ -158,10 +158,9 @@ var webtex;
 script.src = "http://jeromeetienne.github.io/threex.videotexture/threex.webcamtexture.js";
 script.onload = function() {
   webtex = new THREEx.WebcamTexture();
+  console.log("working");
 };
 
-var webtex  = new THREEx.WebcamTexture();
-console.log("webcam texture: " + webcamTexture);
 
 function init() {
 
