@@ -189,9 +189,6 @@ var directionalLight = new THREE.DirectionalLight( 0xffeedd );
 
 
 
-
-    mesh = new THREE.Mesh(geometry, thematerial);
-    //scene.add(mesh);
     
     // model
     var onProgress = function ( xhr ) {
