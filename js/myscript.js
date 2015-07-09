@@ -155,7 +155,7 @@ animate();
 
 
 
-var webcamTexture   = new THREEx.WebcamTexture();
+var webtex  = new THREEx.WebcamTexture();
 console.log("webcam texture: " + webcamTexture);
 
 function init() {
@@ -183,7 +183,7 @@ var directionalLight = new THREE.DirectionalLight( 0xffeedd );
     textures.push(texture);
 
     var thematerial = new THREE.MeshLambertMaterial({
-        map: webcamTexture.texture
+        map: webtex.texture
     });
     materials.push(material);
 
@@ -216,7 +216,7 @@ var loader = new THREE.OBJLoader();
 
 loader.load( 'obj/last.obj', function ( object ) {
 
-    var material = new THREE.MeshPhongMaterial( { map: webcamTexture.texture, transparency:false, side:THREE.DoubleSide, opacity:1.0} );
+    var material = new THREE.MeshPhongMaterial( { map: webtex.texture, transparency:false, side:THREE.DoubleSide, opacity:1.0} );
 
     object.traverse( function ( child ) {
 
@@ -269,7 +269,7 @@ function render() {
     for (var i = 0; i < textures.length; i++) {
         textures[i].needsUpdate = true;
     }
-    webcamTexture.update(delta, now)
+    webtex.update();
 
     renderer.render(scene, camera);
 
