@@ -155,7 +155,7 @@ animate();
 
 
 
-var webcamTexture   = new THREEx.WebcamTexture()
+var webcamTexture   = new THREEx.WebcamTexture();
 console.log("webcam texture: " + webcamTexture);
 
 function init() {
