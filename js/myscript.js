@@ -165,7 +165,6 @@ console.log("madethemat");
           console.log("madethetexture");
 
   material.map = webtex.texture;
-};
 
 
 function init() {
