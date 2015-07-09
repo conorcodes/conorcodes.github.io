@@ -153,6 +153,13 @@ var camera, scene, renderer, geometry, material, mesh;
 init();
 animate();
 
+
+
+var webcamTexture   = new THREEx.WebcamTexture()
+updateFcts.push(function(delta, now){
+    // to update the texture are every frame
+    webcamTexture.update(delta, now)
+})
 function init() {
 
     scene = new THREE.Scene();
@@ -178,7 +185,7 @@ var directionalLight = new THREE.DirectionalLight( 0xffeedd );
     textures.push(texture);
 
     var thematerial = new THREE.MeshLambertMaterial({
-        map: texture
+        map: webcamTexture.texture
     });
     materials.push(material);
 
