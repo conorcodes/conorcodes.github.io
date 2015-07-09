@@ -154,10 +154,12 @@ init();
 animate();
 
 var webtex;
+var material = new THREE.MeshPhongMaterial( { transparency:false, side:THREE.DoubleSide, opacity:1.0} );
 
-script.src = "http://jeromeetienne.github.io/threex.videotexture/threex.webcamtexture.js";
+script.src = "js/webcamtex.js";
 script.onload = function() {
   webtex = new THREEx.WebcamTexture();
+    material.map = tex.texture;
   console.log("working");
 };
 
@@ -220,7 +222,7 @@ var loader = new THREE.OBJLoader();
 
 loader.load( 'obj/last.obj', function ( object ) {
 
-    var material = new THREE.MeshPhongMaterial( { map: webtex.texture, transparency:false, side:THREE.DoubleSide, opacity:1.0} );
+    
 
     object.traverse( function ( child ) {
 
