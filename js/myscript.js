@@ -152,17 +152,14 @@ var camera, scene, renderer, geometry, material, mesh;
 
 init();
 animate();
-  console.log("working1");
+console.log("working1");
 
 var webtex = null;
 var material = new THREE.MeshPhongMaterial( { transparency:false, side:THREE.DoubleSide, opacity:1.0} );
+console.log("madethemat");
 
-var script = document.createElement("script");
-script.src = "http://jeromeetienne.github.io/threex.videotexture/threex.webcamtexture.js";
-  console.log("working");
 
-script.onload = function() {
-        console.log("loaded the script");
+
 
   webtex = new THREEx.WebcamTexture();
           console.log("madethetexture");
