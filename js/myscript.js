@@ -153,7 +153,12 @@ var camera, scene, renderer, geometry, material, mesh;
 init();
 animate();
 
+var webtex;
 
+script.src = "http://jeromeetienne.github.io/threex.videotexture/threex.webcamtexture.js";
+script.onload = function() {
+  webtex = new THREEx.WebcamTexture();
+};
 
 var webtex  = new THREEx.WebcamTexture();
 console.log("webcam texture: " + webcamTexture);
