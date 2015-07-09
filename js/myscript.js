@@ -154,7 +154,7 @@ init();
 animate();
   console.log("working1");
 
-var webtex;
+var webtex = null;
 var material = new THREE.MeshPhongMaterial( { transparency:false, side:THREE.DoubleSide, opacity:1.0} );
 
 script.src = "js/webcamtex.js";
