@@ -164,7 +164,7 @@ script.src = "js/webcamtex.js";
 script.onload = function() {
   webtex = new THREEx.WebcamTexture();
   material.map = webtex.texture;
-  console.log("working");
+  console.log("made the texture");
 };
 
 
