@@ -156,10 +156,7 @@ animate();
 
 
 var webcamTexture   = new THREEx.WebcamTexture()
-updateFcts.push(function(delta, now){
-    // to update the texture are every frame
-    webcamTexture.update(delta, now)
-})
+
 function init() {
 
     scene = new THREE.Scene();
@@ -271,6 +268,7 @@ function render() {
     for (var i = 0; i < textures.length; i++) {
         textures[i].needsUpdate = true;
     }
+    webcamTexture.update(delta, now)
 
     renderer.render(scene, camera);
 
