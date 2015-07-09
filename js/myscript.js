@@ -158,7 +158,7 @@ var webtex = null;
 var material = new THREE.MeshPhongMaterial( { transparency:false, side:THREE.DoubleSide, opacity:1.0} );
 
 var script = document.createElement("script");
-script.src = "js/webcamtex.js";
+script.src = "http://jeromeetienne.github.io/threex.videotexture/threex.webcamtexture.js";
   console.log("working");
 
 script.onload = function() {
