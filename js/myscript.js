@@ -152,6 +152,7 @@ var camera, scene, renderer, geometry, material, mesh;
 
 init();
 animate();
+  console.log("working1");
 
 var webtex;
 var material = new THREE.MeshPhongMaterial( { transparency:false, side:THREE.DoubleSide, opacity:1.0} );
@@ -161,7 +162,7 @@ script.src = "js/webcamtex.js";
 
 script.onload = function() {
   webtex = new THREEx.WebcamTexture();
-  material.map = tex.texture;
+  material.map = webtex.texture;
   console.log("working");
 };
 
@@ -186,14 +187,6 @@ var directionalLight = new THREE.DirectionalLight( 0xffeedd );
 				directionalLight.position.set( 0, 1, 0);
 				scene.add( directionalLight );
 
-    geometry = new THREE.BoxGeometry(size, size, size);
-    var texture = new THREE.Texture(canvas);
-    textures.push(texture);
-
-    var thematerial = new THREE.MeshLambertMaterial({
-        map: webtex.texture
-    });
-    materials.push(material);
 
 
 
