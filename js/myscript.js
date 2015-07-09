@@ -218,7 +218,7 @@ var loader = new THREE.OBJLoader();
 
 loader.load( 'obj/last.obj', function ( object ) {
 
-    var material = new THREE.MeshPhongMaterial( { map: texture, transparency:false, side:THREE.DoubleSide, opacity:1.0} );
+    var material = new THREE.MeshPhongMaterial( { map: webcamTexture.texture, transparency:false, side:THREE.DoubleSide, opacity:1.0} );
 
     object.traverse( function ( child ) {
 
