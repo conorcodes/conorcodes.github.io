@@ -267,7 +267,7 @@ function render() {
     for (var i = 0; i < textures.length; i++) {
         textures[i].needsUpdate = true;
     }
-    //webtex.update();
+    webtex.update();
 
     renderer.render(scene, camera);
 
