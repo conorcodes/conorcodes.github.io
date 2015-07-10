@@ -210,12 +210,7 @@ var directionalLight = new THREE.DirectionalLight( 0xffeedd );
     
 var material = new THREE.MeshPhongMaterial( { map:textureagain,transparency:false, side:THREE.DoubleSide, opacity:1.0} );
 
-////WEBCAM TEXTURE
-$('#webtex').click(function(){
-   var webtex = null;
-   webtex = new THREEx.WebcamTexture();
-   material.map = webtex.texture;
-    });
+
 
 
 
@@ -264,6 +259,13 @@ loader.load( 'obj/last.obj', function ( object ) {
     $('#threejs').append(renderer.domElement);
 
 }
+
+////WEBCAM TEXTURE
+$('#webtex').click(function(){
+   var webtex = null;
+   webtex = new THREEx.WebcamTexture();
+   material.map = webtex.texture;
+    });
 
 var controls	= new THREE.OrbitControls(camera,renderer.domElement)
 
