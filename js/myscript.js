@@ -1,20 +1,16 @@
 window.onload = function() {
-var size = $("#paperdiv").width();
-var SVGstr;
 
-//trying to figure out pasting svgs, not working
-/*
-$(window).on("paste", function (e) {
-    $.each(e.originalEvent.clipboardData.items, function () {
-        this.getAsString(function (str) {
-            SVGstr = str;
-            alert(SVGstr);
-            var SVGShape = new Shape();
-            SVGShape.importSVG(SVGstr);
-        });
-    });
+////SVG UPLOAD
+$('#svgupload').click(function(){
+    var content = document.getElementById('hidethis');
+    var pasteText = document.getElementById('svgpaste');
+    //console.log(content.innerHTML);
+    //content.innerHTML = $("#svgpaste").val().replace(/(\n|\r|\r\n)/g, '<br>');
+    importSVG(pasteText.value);
+    pasteText.value = "";
 });
-*/
+		
+var size = $("#paperdiv").width();
 
 
 ///THIS IS PAPER JS STUFF////
@@ -25,6 +21,12 @@ var canvas = document.getElementById('myCanvas');
 canvas.width = size;
 canvas.height = size;
 paper.setup(canvas);
+
+function onResize(event) {
+    // Whenever the view is resized, move the path to its center:
+    canvas.width = size;
+    canvas.height = size;
+}
 
 var values = {
     paths: 2,
@@ -42,14 +44,20 @@ var hitOptions = {
 };
 
 //createPaths();
-var theSVG = document.getElementById('shell')
-var mySVG = project.importSVG(theSVG);
+function importSVG(theContent){
+var mySVG = project.importSVG(theContent);
 mySVG.fitBounds(view.bounds);
 for(var i = 0; i<mySVG.children.length;i++){
     mySVG.children[i].onDoubleClick = function(event){
         $('input[type=file]').click()
     };
 }
+return mySVG;
+};
+var theSVG = document.getElementById('shell');
+var shell = importSVG(theSVG);
+shell.locked=true;
+
 
 
 function createPaths() {
@@ -144,8 +152,6 @@ tool.onMouseDrag = function onMouseDrag(event) {
 
 var materials = [];
 var textures = [];
-var width = $("#threejs").width();
-var height = $("#threejs").width();
 
 
 var camera, scene, renderer, geometry, material, mesh;
@@ -171,7 +177,7 @@ function init() {
 
     scene = new THREE.Scene();
 
-    camera = new THREE.PerspectiveCamera(50, width / height, 1, 10000);
+    camera = new THREE.PerspectiveCamera(50, 1, 1, 10000);
     camera.position.z = 500;
     scene.add(camera);
     var light = new THREE.AmbientLight( 0xffeedd ); // soft white light
@@ -248,7 +254,7 @@ loader.load( 'obj/last.obj', function ( object ) {
 
 
     renderer = new THREE.WebGLRenderer({alpha: true});
-    renderer.setSize(width, height);
+    renderer.setSize(size, size+4);
 
     $('#threejs').append(renderer.domElement);
 
