@@ -263,8 +263,9 @@ loader.load( 'obj/last.obj', function ( object ) {
 
 ////WEBCAM TEXTURE
 $('#webtex').click(function(){
-   var webtex = null;
-   webtex = new THREEx.WebcamTexture();
+    alert("coming soon");
+   //var webtex = null;
+   //webtex = new THREEx.WebcamTexture();
    //materials[0].map = webtex.texture;
     });
 
@@ -281,7 +282,7 @@ function render() {
     for (var i = 0; i < textures.length; i++) {
         textures[i].needsUpdate = true;
     }
-	webtex.update();
+	//webtex.update();
 
     renderer.render(scene, camera);
 
