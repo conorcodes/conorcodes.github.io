@@ -9,6 +9,13 @@ $('#svgupload').click(function(){
     importSVG(pasteText.value);
     pasteText.value = "";
 });
+
+////WEBCAM TEXTURE
+$('#webtex').click(function(){
+    var webtex = null;
+    webtex = new THREEx.WebcamTexture();
+    material.map = webtex.texture;
+    });
 		
 var size = $("#paperdiv").width();
 
@@ -160,16 +167,6 @@ init();
 animate();
 console.log("working1");
 
-var webtex = null;
-var material = new THREE.MeshPhongMaterial( { transparency:false, side:THREE.DoubleSide, opacity:1.0} );
-console.log("madethemat");
-
-
-
-
-  webtex = new THREEx.WebcamTexture();
-          console.log("madethetexture");
-
 
 function init() {
 
@@ -212,7 +209,17 @@ var directionalLight = new THREE.DirectionalLight( 0xffeedd );
     
     var textureagain = new THREE.Texture();
     textureagain.image = canvas;
+    //textureagain.minFilter = THREE.NearestMipMapNearestFilter;
     textureagain.needsUpdate = true;
+    textures.push(textureagain);
+    
+var material = new THREE.MeshPhongMaterial( { map:textureagain,transparency:false, side:THREE.DoubleSide, opacity:1.0} );
+
+
+
+
+
+
 
 var loader = new THREE.OBJLoader();
 
@@ -225,10 +232,6 @@ loader.load( 'obj/last.obj', function ( object ) {
         if ( child instanceof THREE.Mesh ) {
 
             child.material = material;
-	    material.map = textureagain;
-	    if (webtex) {
-		material.map = webtex.texture;
-	    }
             console.log('assigned the material');
 
         }
@@ -275,9 +278,9 @@ function render() {
     for (var i = 0; i < textures.length; i++) {
         textures[i].needsUpdate = true;
     }
-    if (webtex) {
-	webtex.update();
-    }
+    //if (webtex) {
+	//webtex.update();
+    //}
 
     renderer.render(scene, camera);
 
