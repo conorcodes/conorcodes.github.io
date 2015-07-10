@@ -170,8 +170,6 @@ console.log("madethemat");
   webtex = new THREEx.WebcamTexture();
           console.log("madethetexture");
 
-  material.map = webtex.texture;
-
 
 function init() {
 
@@ -227,6 +225,10 @@ loader.load( 'obj/last.obj', function ( object ) {
         if ( child instanceof THREE.Mesh ) {
 
             child.material = material;
+	    material.map = textureagain;
+	    if (webtex) {
+		material.map = webtex.texture;
+	    }
             console.log('assigned the material');
 
         }
