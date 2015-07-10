@@ -10,14 +10,7 @@ $('#svgupload').click(function(){
     pasteText.value = "";
 });
 
-////WEBCAM TEXTURE
-$('#webtex').click(function(){
-    var webtex = null;
-    webtex = new THREEx.WebcamTexture();
-    material.map = webtex.texture;
-    });
-		
-var size = $("#paperdiv").width();
+
 
 
 ///THIS IS PAPER JS STUFF////
@@ -216,7 +209,14 @@ var directionalLight = new THREE.DirectionalLight( 0xffeedd );
 var material = new THREE.MeshPhongMaterial( { map:textureagain,transparency:false, side:THREE.DoubleSide, opacity:1.0} );
 
 
-
+////WEBCAM TEXTURE
+$('#webtex').click(function(){
+    var webtex = null;
+    webtex = new THREEx.WebcamTexture();
+    material.map = webtex.texture;
+    });
+		
+var size = $("#paperdiv").width();
 
 
 
