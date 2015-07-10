@@ -12,9 +12,9 @@ $('#svgupload').click(function(){
 
 ////WEBCAM TEXTURE
 $('#webtex').click(function(){
-    var webtex = null;
-    webtex = new THREEx.WebcamTexture();
-    material.map = webtex.texture;
+   var webtex = null;
+   webtex = new THREEx.WebcamTexture();
+   material.map = webtex.texture;
     });
 		
 var size = $("#paperdiv").width();
@@ -278,9 +278,9 @@ function render() {
     for (var i = 0; i < textures.length; i++) {
         textures[i].needsUpdate = true;
     }
-    if (webtex) {
+    if (webtex.available) {
 	webtex.update();
-    //}
+    }
 
     renderer.render(scene, camera);
 
