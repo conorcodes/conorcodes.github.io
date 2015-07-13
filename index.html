@@ -19,10 +19,10 @@
 	<header class="hero-unit bg-primary">
           <h1>Hi, I'm _____.</h1>
         </header>
-	<div class="row no-gutters">
-	    <div id="threejs" class="col-sm-6 col-md-6 col-lg-6" style="border: 2px solid white"></div>
+	<div class="row no-gutters" style="border: 2px solid white">
+	    <div id="threejs" class="col-sm-6 col-md-6 col-lg-6"></div>
 	    <div id="paperdiv" class="col-sm-6 col-md-6 col-lg-6">
-		<canvas id="myCanvas" hidpi="on" style="border: 2px solid white"></canvas>
+		<canvas id="myCanvas"></canvas>
 	    </div>
 	</div>
 	<div class="col-sm-6 col-md-6 col-lg-6 bg-primary">
@@ -38,7 +38,10 @@
 	    <div class="form-group">
 		<textarea class="form-control" rows="5" id="svgpaste">Paste Illustrator content here to add it to the canvas...</textarea>
 	    </div>
+	    <a id="selTool" class="btn btn-info" type="button">Selection Tool</a>
+	    <a id="penTool" class="btn btn-info" type="button">Pen Tool</a>
 	    <a id="webtex" class="btn btn-info" type="button">Use Webcam As Texture</a>
+
 
 	    <h3>2D Controls</h3>
 	    <ul class="list-unstyled">
