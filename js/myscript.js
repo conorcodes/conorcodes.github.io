@@ -25,19 +25,6 @@ canvas.width = size;
 canvas.height = size;
 paper.setup(canvas);
 
-function onResize(event) {
-    // Whenever the view is resized, move the path to its center:
-    canvas.width = size;
-    canvas.height = size;
-}
-
-var values = {
-    paths: 2,
-    minPoints: 5,
-    maxPoints: 15,
-    minRadius: 30,
-    maxRadius: 90
-};
 
 var hitOptions = {
     segments: true,
@@ -63,39 +50,6 @@ shell.locked=true;
 
 
 
-function createPaths() {
-    var radiusDelta = values.maxRadius - values.minRadius;
-    var pointsDelta = values.maxPoints - values.minPoints;
-    for (var i = 0; i < values.paths; i++) {
-        var radius = values.minRadius + Math.random() * radiusDelta;
-        var points = values.minPoints + Math.floor(Math.random() * pointsDelta);
-        var center = {};
-        center.x = view.size.width * Point.random().x;
-        center.y = view.size.height * Point.random().y;
-        var path = createBlob(center, radius, points);
-        var lightness = (Math.random() - 0.5) * 0.4 + 0.4;
-        var hue = Math.random() * 360;
-        path.fillColor = {
-            hue: 200,
-            saturation: 1,
-            lightness: 0.5
-        };
-        path.strokeColor = 'black';
-    }
-}
-
-
-
-function createBlob(center, maxRadius, points) {
-
-    var path = new Path.Circle(center, Math.random() * maxRadius);
-
-    return path;
-}
-
-var segment, path;
-var movePath = false;
-
 
 ///PAPER TOOLS
 
@@ -108,73 +62,75 @@ var movePath = false;
 var penTool = new Tool();
 
 var path;
-var types = ['point', 'handleIn', 'handleOut'];
-function findHandle(point) {
-	for (var i = 0, l = path.segments.length; i < l; i++) {
-		for (var j = 0; j < 3; j++) {
-			var type = types[j];
-			var segment = path.segments[i];
-			var segmentPoint = type == 'point'
-					? segment.point
-					: segment.point + segment[type];
-			var distance = (point - segmentPoint).length;
-			if (distance < 3) {
-				return {
-					type: type,
-					segment: segment
-				};
-			}
-		}
-	}
-	return null;
-}
+        var types = ['point', 'handleIn', 'handleOut'];
+        function findHandle(point) {
+            for (var i = 0, l = path.segments.length; i < l; i++) {
+                for (var j = 0; j < 3; j++) {
+                    var type = types[j];
+                    var segment = path.segments[i];
+                    var segmentPoint = type == 'point'
+                            ? segment.point
+                            : segment.point + segment[type];
+                    var distance = (point - segmentPoint).length;
+                    if (distance < 3) {
+                        return {
+                            type: type,
+                            segment: segment
+                        };
+                    }
+                }
+            }
+            return null;
+        }
 
-var currentSegment, mode, type;
-penTool.onMouseDown = function(event) {
-	if (currentSegment)
-		currentSegment.selected = false;
-	mode = type = currentSegment = null;
-	
-	if (!path) {
-	    alert('making path')
-		path = new Path();
-		path.fillColor = new HSBColor(360 * Math.random(), 1, 1, 0.5);
-	}
-	alert(event.point);
-	
-	var result = findHandle(event.point);
-	if (result) {
-		currentSegment = result.segment;
-		type = result.type;
-		if (path.segments.length > 1 && result.type == 'point'
-				&& result.segment.index == 0) {
-			mode = 'close';
-			path.closed = true;
-			path.selected = false;
-			path = null;
-		}
-	}
-	
-	if (mode != 'close') {
-		mode = currentSegment ? 'move' : 'add';
-		if (!currentSegment)
-			currentSegment = path.add(event.point);
-		currentSegment.selected = true;
-	}
-}
-	
-penTool.onMouseDrag = function(event) {
-	if (mode == 'move' && type == 'point') {
-		currentSegment.point = event.point;
-	} else if (mode != 'close') {
-		var delta = event.delta.clone();
-		if (type == 'handleOut' || mode == 'add')
-			delta = -delta;
-		currentSegment.handleIn += delta;
-		currentSegment.handleOut -= delta;
-	}
-}
-	
+        var currentSegment, mode, type;
+        penTool.onMouseDown = function(event) {
+            if (currentSegment)
+                currentSegment.selected = false;
+            mode = type = currentSegment = null;
+
+            if (!path) {
+                path = new Path();
+                path.fillColor = {
+                    hue: 360 * Math.random(),
+                    saturation: 1,
+                    brightness: 1,
+                    alpha: 0.5
+                };
+            }
+
+            var result = findHandle(event.point);
+            if (result) {
+                currentSegment = result.segment;
+                type = result.type;
+                if (path.segments.length > 1 && result.type == 'point'
+                        && result.segment.index == 0) {
+                    mode = 'close';
+                    path.closed = true;
+                    path.selected = false;
+                    path = null;
+                }
+            }
+
+            if (mode != 'close') {
+                mode = currentSegment ? 'move' : 'add';
+                if (!currentSegment)
+                    currentSegment = path.add(event.point);
+                currentSegment.selected = true;
+            }
+        }
+
+        penTool.onMouseDrag = function(event) {
+            if (mode == 'move' && type == 'point') {
+                currentSegment.point = event.point;
+            } else if (mode != 'close') {
+                var delta = event.delta.clone();
+                if (type == 'handleOut' || mode == 'add')
+                    delta = -delta;
+                currentSegment.handleIn += delta;
+                currentSegment.handleOut -= delta;
+            }
+        }
 
 /////Selection Tool
 
