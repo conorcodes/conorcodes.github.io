@@ -1,7 +1,8 @@
 window.onload = function() {
 
 ////SVG UPLOAD
-$('#svgupload').click(function(){
+
+$('#svgpaste').on('input propertychange paste', function() {
     var content = document.getElementById('hidethis');
     var pasteText = document.getElementById('svgpaste');
     //console.log(content.innerHTML);
@@ -154,6 +155,8 @@ tool.onMouseDrag = function onMouseDrag(event) {
 
 var materials = [];
 var textures = [];
+var threewidth = $("#threejs").width();
+
 
 
 var camera, scene, renderer, geometry, material, mesh;
@@ -253,9 +256,8 @@ loader.load( 'obj/last.obj', function ( object ) {
 
 } );
 
-
     renderer = new THREE.WebGLRenderer({alpha: true});
-    renderer.setSize(size, size+4);
+    renderer.setSize(threewidth, threewidth);
 
     $('#threejs').append(renderer.domElement);
 
