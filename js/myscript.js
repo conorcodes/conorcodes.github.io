@@ -450,7 +450,7 @@ if ( window.FileReader ) {
     
                     $('.hideimages').append( image );
 		    var raster = new Raster(image.id);
-		    raster.fitBounds(theClipper.bounds);
+		    raster.fitBounds(theClipper.bounds, true);
 		    var group = new Group(theClipper, raster);
 		    group.clipped = true;
                     
