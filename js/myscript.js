@@ -30,16 +30,18 @@ var hitOptions = {
     segments: true,
     stroke: true,
     fill: true,
-    tolerance: 2
+    tolerance: 10,
 };
 
-//createPaths();
+var theClipper;
 function importSVG(theContent){
 var mySVG = project.importSVG(theContent);
 mySVG.fitBounds(view.bounds);
 for(var i = 0; i<mySVG.children.length;i++){
     mySVG.children[i].onDoubleClick = function(event){
-        $('input[type=file]').click()
+        var result = $('input[type=file]').click();
+	theClipper = this;
+	
     };
 }
 return mySVG;
@@ -54,87 +56,52 @@ shell.locked=true;
 ///PAPER TOOLS
 
 
-
-
-
 /////Pen Tool
 
-var penTool = new Tool();
+var pencilTool = new Tool();
 
-var path;
-        var types = ['point', 'handleIn', 'handleOut'];
-        function findHandle(point) {
-            for (var i = 0, l = path.segments.length; i < l; i++) {
-                for (var j = 0; j < 3; j++) {
-                    var type = types[j];
-                    var segment = path.segments[i];
-                    var segmentPoint = type == 'point'
-                            ? segment.point
-                            : segment.point + segment[type];
-                    var distance = (point - segmentPoint).length;
-                    if (distance < 3) {
-                        return {
-                            type: type,
-                            segment: segment
-                        };
-                    }
-                }
-            }
-            return null;
+    //pencil   
+    pencilTool.onMouseDown = function(event) {
+        if (path) {
+            path.selected = false;
         }
+        
+        path = new Path({
+            segments: [event.point],
+            strokeColor: 'black',
+            strokeWidth: 3
+        });
+    }
 
-        var currentSegment, mode, type;
-        penTool.onMouseDown = function(event) {
-            if (currentSegment)
-                currentSegment.selected = false;
-            mode = type = currentSegment = null;
+    pencilTool.onMouseDrag = function(event) {
+        path.add(event.point);
+    }
 
-            if (!path) {
-                path = new Path();
-                path.fillColor = {
-                    hue: 360 * Math.random(),
-                    saturation: 1,
-                    brightness: 1,
-                    alpha: 0.5
-                };
-            }
+    pencilTool.onMouseUp = function(event) {
+        path.simplify(5);    
+    }
 
-            var result = findHandle(event.point);
-            if (result) {
-                currentSegment = result.segment;
-                type = result.type;
-                if (path.segments.length > 1 && result.type == 'point'
-                        && result.segment.index == 0) {
-                    mode = 'close';
-                    path.closed = true;
-                    path.selected = false;
-                    path = null;
-                }
-            }
-
-            if (mode != 'close') {
-                mode = currentSegment ? 'move' : 'add';
-                if (!currentSegment)
-                    currentSegment = path.add(event.point);
-                currentSegment.selected = true;
-            }
-        }
-
-        penTool.onMouseDrag = function(event) {
-            if (mode == 'move' && type == 'point') {
-                currentSegment.point = event.point;
-            } else if (mode != 'close') {
-                var delta = event.delta.clone();
-                if (type == 'handleOut' || mode == 'add')
-                    delta = -delta;
-                currentSegment.handleIn += delta;
-                currentSegment.handleOut -= delta;
-            }
-        }
 
 /////Selection Tool
-
 var selTool = new Tool();
+
+selTool.onKeyDown = function(event) {
+    if (event.key == 'delete') {
+	project.selectedItems[0].removeChildren();
+        project.selectedItems[0].remove();
+	selectionRectangle.remove();
+    }
+     if (event.key == 'escape') {
+	project.deselectAll();
+     }
+      if (event.key == '+') {
+	project.selectedItems[1].scale(1.1);
+     }
+          if (event.key == '-') {
+	project.selectedItems[1].scale(.9);
+     }
+}
+
 
 var selectionRectangle = null;
 var selectionRectangleScale=null;
@@ -291,9 +258,9 @@ selTool.onMouseUp = function(event) {
 
 ///Tool buttons
 
-$('#penTool').click(function(){
+$('#pencilTool').click(function(){
     removeSelRect();
-penTool.activate();
+pencilTool.activate();
 });
 
 $('#selTool').click(function(){
@@ -447,6 +414,16 @@ function render() {
 }
 
 ////FILE READER STUFF
+function makeid()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 5; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
 
 if ( window.FileReader ) {
  
@@ -466,12 +443,16 @@ if ( window.FileReader ) {
     
                     image.height = 100;
                     image.title = file.name;
-                    image.id = "donthide";
+                    image.id = makeid();
                     image.src = /^image/.test(file.type) 
                         ? this.result 
                         : "http://i.stack.imgur.com/t9QlH.png";
     
-                    document.body.appendChild( image );
+                    $('.hideimages').append( image );
+		    var raster = new Raster(image.id);
+		    raster.fitBounds(theClipper.bounds);
+		    var group = new Group(theClipper, raster);
+		    group.clipped = true;
                     
                 }
                     
