@@ -1,6 +1,9 @@
 #hidethis {
     display:none;
 }
+.hideimages {
+    display:none;
+}
 input{
     display:none;
 }

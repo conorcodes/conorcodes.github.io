@@ -48,7 +48,7 @@ return mySVG;
 };
 var theSVG = document.getElementById('shell');
 var shell = importSVG(theSVG);
-shell.locked=true;
+shell.locked=false;
 
 
 
@@ -286,7 +286,6 @@ var camera, scene, renderer, geometry, material, mesh;
 
 init();
 animate();
-console.log("working1");
 
 
 function init() {
@@ -334,7 +333,7 @@ var directionalLight = new THREE.DirectionalLight( 0xffeedd );
     textureagain.needsUpdate = true;
     textures.push(textureagain);
     
-var material = new THREE.MeshPhongMaterial( { map:textureagain,transparency:false, side:THREE.DoubleSide, opacity:1.0} );
+var material = new THREE.MeshBasicMaterial( { map:textureagain,transparency:false, side:THREE.DoubleSide, opacity:1.0} );
 //materials.push(material);
 
 
@@ -343,9 +342,43 @@ var material = new THREE.MeshPhongMaterial( { map:textureagain,transparency:fals
 
 
 
-var loader = new THREE.OBJLoader();
+var loader = new THREE.OBJMTLLoader();
 
-loader.load( 'obj/last.obj', function ( object ) {
+var importedOBJ = loader.load( 'obj/BBall_Shoe.obj', 'obj/BBall_Shoe.mtl', function ( object ) {
+
+    
+
+    object.traverse( function ( child ) {
+
+        if ( child instanceof THREE.Mesh ) {
+
+            //child.material = material;
+            console.log('found 1');
+
+        }
+
+    } );
+
+    scene.add(object);
+    console.log('happening');
+
+    console.log('added mesh');
+    var bBox = new THREE.Box3().setFromObject(object);
+    console.log('bbox is: ' + bBox);
+    var bheight = bBox.size().y;
+        console.log('height is: ' + bheight);
+
+    var dist = bheight / (2 * Math.tan(50 * Math.PI / 360));
+            console.log('dist is: ' + dist);
+
+    var pos = object.position;
+    console.log('pos is:' + pos);
+    camera.position.set(pos.x, pos.y, dist * 4); // fudge factor so you can see the boundaries
+    camera.lookAt(pos);
+
+} );
+
+var importedUpper = loader.load( 'obj/Upper.obj', 'obj/Upper.mtl', function ( object ) {
 
     
 
@@ -354,7 +387,7 @@ loader.load( 'obj/last.obj', function ( object ) {
         if ( child instanceof THREE.Mesh ) {
 
             child.material = material;
-            console.log('assigned the material');
+            console.log('found 1');
 
         }
 
