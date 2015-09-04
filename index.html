@@ -9,26 +9,35 @@
 	<script type="text/javascript" src="js/OBJLoader.js"></script>
 	<script type="text/javascript" src='js/OrbitControls.js'></script>
 	<script type="text/javascript" src="js/myscript.js"></script>
+	<script type="text/javascript" src="js/tab.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/theme.min.css">
 	<link rel="stylesheet" type="text/css" href="css/custom.css">
 	<link rel="stylesheet" type="text/css" href="css/stylesheet.css">
-
-	
-
-	
+	<script>
+	    $('#myTabs a').click(function (e) {
+		e.preventDefault();
+		$('#myTabs a:first').tab('show');
+		});
+	</script>
     </head>
+    
     <!--<body>!-->
     <input type="file" id="collection" style="display:none" multiple /><br/>
     <div class="container bg-primary">
 	<header class="hero-unit bg-primary">
           <h1>Hi, I'm _____.</h1>
         </header>
-	<div class="row no-gutters" style="border: 2px solid white">
-	    <div id="threejs" class="col-sm-6 col-md-6 col-lg-6"></div>
-	    <div id="paperdiv" class="col-sm-6 col-md-6 col-lg-6">
+	<ul class="nav nav-tabs" id="myTab" role="tablist">
+	    <li class="active"><a href="#paperdiv" role="tab" data-toggle="tab">2D</a></li>
+	    <li class="active"><a id="threeToggle" href="#threejs" role="tab" data-toggle="tab">3D</a></li>
+	</ul>
+	<div class="tab-content">
+	    <div class="tab-pane active" id="paperdiv">
 		<canvas id="myCanvas"></canvas>
 	    </div>
+	    <div class="tab-pane active" id="threejs"></div>
 	</div>
+	    
 	<div class="col-sm-6 col-md-6 col-lg-6 bg-primary">
 	    <h3>3D Controls</h3>
 	    	<ul class="list-unstyled">
@@ -39,11 +48,11 @@
 	</div>
 	<div class="col-sm-6 col-md-6 col-lg-6 bg-primary">
 	    <br>
-	    <div class="form-group">
+	    <!--<div class="form-group">
 		<textarea class="form-control" rows="5" id="svgpaste">Paste Illustrator content here to add it to the canvas...</textarea>
-	    </div>
+	    </div>-->
 	    <a id="selTool" class="btn btn-info" type="button">Selection Tool</a>
-	    <a id="pencilTool" class="btn btn-info" type="button">Pencil Tool</a>
+	    <a id="loadimg" class="btn btn-info" type="button">Load Image</a>
 	    <a id="webtex" class="btn btn-info" type="button">Use Webcam As Texture</a>
 
 

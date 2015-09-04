@@ -25,7 +25,6 @@ canvas.width = size;
 canvas.height = size;
 paper.setup(canvas);
 
-
 var hitOptions = {
     segments: true,
     stroke: true,
@@ -36,7 +35,7 @@ var hitOptions = {
 var theClipper;
 function importSVG(theContent){
 var mySVG = project.importSVG(theContent);
-mySVG.fitBounds(view.bounds);
+//mySVG.fitBounds(view.bounds);
 for(var i = 0; i<mySVG.children.length;i++){
     mySVG.children[i].onDoubleClick = function(event){
         var result = $('input[type=file]').click();
@@ -48,7 +47,9 @@ return mySVG;
 };
 var theSVG = document.getElementById('shell');
 var shell = importSVG(theSVG);
-shell.locked=false;
+shell.fitBounds(view.bounds);
+shell.blendMode = 'multiply'
+paper.view.draw();
 
 
 
@@ -427,6 +428,11 @@ $('#webtex').click(function(){
    //materials[0].map = webtex.texture;
     });
 
+    
+$('#loadimg').click(function(){
+    var result = $('input[type=file]').click();
+    });
+
 var controls	= new THREE.OrbitControls(camera,renderer.domElement)
 
 function animate() {
@@ -471,7 +477,8 @@ if ( window.FileReader ) {
             reader.onloadend = (function(file){
                 
                 return function(){
-
+		    
+		
                     var image = new Image();
     
                     image.height = 100;
@@ -484,8 +491,14 @@ if ( window.FileReader ) {
                     $('.hideimages').append( image );
 		    var raster = new Raster(image.id);
 		    raster.fitBounds(theClipper.bounds, true);
-		    var group = new Group(theClipper, raster);
-		    group.clipped = true;
+		    //raster.sendToBack();
+		    shell.locked=false;
+		    shell.bringToFront();
+		    shell.locked=true;
+		    console.log(raster.parent);
+		    console.log(shell.parent);
+		    //var group = new Group(theClipper, raster);
+		    //group.clipped = true;
                     
                 }
                     
