@@ -48,7 +48,7 @@ return mySVG;
 var theSVG = document.getElementById('shell');
 var shell = importSVG(theSVG);
 shell.fitBounds(view.bounds);
-shell.blendMode = 'multiply'
+shell.blendMode = 'multiply';
 paper.view.draw();
 
 
@@ -488,15 +488,13 @@ if ( window.FileReader ) {
                         ? this.result 
                         : "http://i.stack.imgur.com/t9QlH.png";
     
-                    $('.hideimages').append( image );
+                    $('.hideimages').append(image);
 		    var raster = new Raster(image.id);
 		    raster.fitBounds(theClipper.bounds, true);
 		    //raster.sendToBack();
 		    shell.locked=false;
 		    shell.bringToFront();
 		    shell.locked=true;
-		    console.log(raster.parent);
-		    console.log(shell.parent);
 		    //var group = new Group(theClipper, raster);
 		    //group.clipped = true;
                     
