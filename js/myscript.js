@@ -330,7 +330,7 @@ var directionalLight = new THREE.DirectionalLight( 0xffeedd );
     
     var textureagain = new THREE.Texture();
     textureagain.image = canvas;
-    //textureagain.minFilter = THREE.NearestMipMapNearestFilter;
+    textureagain.minFilter = THREE.NearestMipMapNearestFilter;
     textureagain.needsUpdate = true;
     textures.push(textureagain);
     
