@@ -334,7 +334,7 @@ var directionalLight = new THREE.DirectionalLight( 0xffeedd );
     textureagain.needsUpdate = true;
     textures.push(textureagain);
     
-var material = new THREE.MeshPhongMaterial( { map:textureagain,transparency:false, side:THREE.DoubleSide, opacity:1.0} );
+var material = new THREE.MeshBasicMaterial( { map:textureagain,transparency:false, side:THREE.DoubleSide, opacity:1.0} );
 //materials.push(material);
 
 
