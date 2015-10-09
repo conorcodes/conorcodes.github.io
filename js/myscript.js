@@ -280,6 +280,7 @@ function removeSelRect(){
 var materials = [];
 var textures = [];
 var threewidth = $("#threejs").width();
+var uppermaterial=null;
 
 
 
@@ -328,22 +329,10 @@ var directionalLight = new THREE.DirectionalLight( 0xffeedd );
             console.log( item, loaded, total );
     };
     
-    var textureagain = new THREE.Texture();
-    textureagain.image = canvas;
-    textureagain.minFilter = THREE.NearestMipMapNearestFilter;
-    textureagain.needsUpdate = true;
-    textures.push(textureagain);
-    
-var material = new THREE.MeshBasicMaterial( { map:textureagain,transparency:false, side:THREE.DoubleSide, opacity:1.0} );
-//materials.push(material);
-
-
-
-
-
 
 
 var loader = new THREE.OBJMTLLoader();
+
 
 var importedOBJ = loader.load( 'obj/BBall_Shoe.obj', 'obj/BBall_Shoe.mtl', function ( object ) {
 
@@ -361,9 +350,6 @@ var importedOBJ = loader.load( 'obj/BBall_Shoe.obj', 'obj/BBall_Shoe.mtl', funct
     } );
 
     scene.add(object);
-    console.log('happening');
-
-    console.log('added mesh');
     var bBox = new THREE.Box3().setFromObject(object);
     console.log('bbox is: ' + bBox);
     var bheight = bBox.size().y;
@@ -379,6 +365,15 @@ var importedOBJ = loader.load( 'obj/BBall_Shoe.obj', 'obj/BBall_Shoe.mtl', funct
 
 } );
 
+    var textureagain = new THREE.Texture();
+    textureagain.image = canvas;
+    textureagain.minFilter = THREE.NearestMipMapNearestFilter;
+    textureagain.needsUpdate = true;
+    textures.push(textureagain);
+    
+    uppermaterial = new THREE.MeshBasicMaterial( { map:textureagain,transparency:false, side:THREE.DoubleSide, opacity:1.0} );
+//materials.push(material);
+
 var importedUpper = loader.load( 'obj/Upper.obj', 'obj/Upper.mtl', function ( object ) {
 
     
@@ -387,7 +382,7 @@ var importedUpper = loader.load( 'obj/Upper.obj', 'obj/Upper.mtl', function ( ob
 
         if ( child instanceof THREE.Mesh ) {
 
-            child.material = material;
+            child.material = uppermaterial;
             console.log('found 1');
 
         }
@@ -395,9 +390,6 @@ var importedUpper = loader.load( 'obj/Upper.obj', 'obj/Upper.mtl', function ( ob
     } );
 
     scene.add(object);
-    console.log('happening');
-
-    console.log('added mesh');
     var bBox = new THREE.Box3().setFromObject(object);
     console.log('bbox is: ' + bBox);
     var bheight = bBox.size().y;
@@ -421,11 +413,13 @@ var importedUpper = loader.load( 'obj/Upper.obj', 'obj/Upper.mtl', function ( ob
 }
 
 ////WEBCAM TEXTURE
+var webtex = null;
 $('#webtex').click(function(){
-    alert("coming soon");
+    //alert("coming soon");
    //var webtex = null;
-   //webtex = new THREEx.WebcamTexture();
-   //materials[0].map = webtex.texture;
+   webtex = new THREEx.WebcamTexture();
+   uppermaterial.map = webtex.texture;
+   uppermaterial.needsUpdate = true;
     });
 
     
@@ -446,8 +440,9 @@ function render() {
     for (var i = 0; i < textures.length; i++) {
         textures[i].needsUpdate = true;
     }
-	//webtex.update();
-
+	if (webtex){
+	    webtex.update();
+	}
     renderer.render(scene, camera);
 
 }
