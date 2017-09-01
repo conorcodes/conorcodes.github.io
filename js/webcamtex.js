@@ -1,7 +1,7 @@
 var THREEx = THREEx || {}
 
 THREEx.WebcamTexture	= function(){
-	console.assert(THREEx.WebcamTexture.available === true)
+	//console.assert(THREEx.WebcamTexture.available === true)
 	// create the video element
 	var video	= document.createElement('video');
 	video.width	= 320;
@@ -23,7 +23,7 @@ THREEx.WebcamTexture	= function(){
 		}, function(error){
 			alert('you got no WebRTC webcam');
 		});				
-	}else	console.assert(false)
+	}else	//console.assert(false)
 
 
 	// create the texture
