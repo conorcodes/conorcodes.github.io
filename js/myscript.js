@@ -505,3 +505,4 @@ if ( window.FileReader ) {
     
 }
 };
+console.log("done")
