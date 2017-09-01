@@ -368,8 +368,8 @@ var importedOBJ = loader.load( 'obj/BBall_Shoe.obj', 'obj/BBall_Shoe.mtl', funct
 var webtex = null;
 
    webtex = new THREEx.WebcamTexture();
-   uppermaterial.map = webtex.texture;
-   uppermaterial.needsUpdate = true;
+   //uppermaterial.map = webtex.texture;
+   
 
 
     var textureagain = new THREE.Texture();
@@ -380,6 +380,7 @@ var webtex = null;
     
     uppermaterial = new THREE.MeshBasicMaterial( { map:webtex,transparency:false, side:THREE.DoubleSide, opacity:1.0} );
 //materials.push(material);
+	uppermaterial.needsUpdate = true;
 
 var importedUpper = loader.load( 'obj/Upper.obj', 'obj/Upper.mtl', function ( object ) {
 
