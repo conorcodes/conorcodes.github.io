@@ -10,6 +10,8 @@ $('#svgpaste').on('input propertychange paste', function() {
     importSVG(pasteText.value);
     pasteText.value = "";
 });
+	
+	var updateFcts = [];
 
 
 		
@@ -432,26 +434,29 @@ $('#loadimg').click(function(){
 
 var controls	= new THREE.OrbitControls(camera,renderer.domElement)
 
-function animate() {
-
-    requestAnimationFrame(animate);
-	for(var f=0; f<updateFcts.length; f++){
-		updateFcts[f]();
-	}
-    render();
-
-}
-
-function render() {
-    for (var i = 0; i < textures.length; i++) {
-        textures[i].needsUpdate = true;
-    }
-	if (webtex){
-	    webtex.update();
-	}
-    renderer.render(scene, camera);
-
-}
+//////////////////////////////////////////////////////////////////////////////////
+	//		render the scene						//
+	//////////////////////////////////////////////////////////////////////////////////
+	updateFcts.push(function(){
+		renderer.render( scene, camera );		
+	})
+	
+	//////////////////////////////////////////////////////////////////////////////////
+	//		loop runner							//
+	//////////////////////////////////////////////////////////////////////////////////
+	var lastTimeMsec= null
+	requestAnimationFrame(function animate(nowMsec){
+		// keep looping
+		requestAnimationFrame( animate );
+		// measure time
+		lastTimeMsec	= lastTimeMsec || nowMsec-1000/60
+		var deltaMsec	= Math.min(200, nowMsec - lastTimeMsec)
+		lastTimeMsec	= nowMsec
+		// call each update function
+		updateFcts.forEach(function(updateFn){
+			updateFn(deltaMsec/1000, nowMsec/1000)
+		})
+	})
 
 ////FILE READER STUFF
 function makeid()
