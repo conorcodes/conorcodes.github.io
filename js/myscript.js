@@ -364,6 +364,13 @@ var importedOBJ = loader.load( 'obj/BBall_Shoe.obj', 'obj/BBall_Shoe.mtl', funct
     camera.lookAt(pos);
 
 } );
+////WEBCAM TEXTURE
+var webtex = null;
+
+   webtex = new THREEx.WebcamTexture();
+   uppermaterial.map = webtex.texture;
+   uppermaterial.needsUpdate = true;
+
 
     var textureagain = new THREE.Texture();
     textureagain.image = canvas;
@@ -371,7 +378,7 @@ var importedOBJ = loader.load( 'obj/BBall_Shoe.obj', 'obj/BBall_Shoe.mtl', funct
     textureagain.needsUpdate = true;
     textures.push(textureagain);
     
-    uppermaterial = new THREE.MeshBasicMaterial( { map:textureagain,transparency:false, side:THREE.DoubleSide, opacity:1.0} );
+    uppermaterial = new THREE.MeshBasicMaterial( { map:webtex,transparency:false, side:THREE.DoubleSide, opacity:1.0} );
 //materials.push(material);
 
 var importedUpper = loader.load( 'obj/Upper.obj', 'obj/Upper.mtl', function ( object ) {
@@ -412,15 +419,6 @@ var importedUpper = loader.load( 'obj/Upper.obj', 'obj/Upper.mtl', function ( ob
 
 }
 
-////WEBCAM TEXTURE
-var webtex = null;
-$('#webtex').click(function(){
-    //alert("coming soon");
-   //var webtex = null;
-   webtex = new THREEx.WebcamTexture();
-   uppermaterial.map = webtex.texture;
-   uppermaterial.needsUpdate = true;
-    });
 
     
 $('#loadimg').click(function(){
