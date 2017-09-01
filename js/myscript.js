@@ -369,6 +369,10 @@ var webtex = null;
 
    webtex = new THREEx.WebcamTexture();
    //uppermaterial.map = webtex.texture;
+	updateFcts.push(function(delta, now){
+    // to update the texture are every frame
+    webtex.update(delta, now)
+})
    
 
 
@@ -379,8 +383,8 @@ var webtex = null;
     textures.push(textureagain);
     
     uppermaterial = new THREE.MeshBasicMaterial( { map:webtex,transparency:false, side:THREE.DoubleSide, opacity:1.0} );
-//materials.push(material);
-	uppermaterial.needsUpdate = true;
+materials.push(material);
+	//uppermaterial.needsUpdate = true;
 
 var importedUpper = loader.load( 'obj/Upper.obj', 'obj/Upper.mtl', function ( object ) {
 
@@ -431,6 +435,9 @@ var controls	= new THREE.OrbitControls(camera,renderer.domElement)
 function animate() {
 
     requestAnimationFrame(animate);
+	for(var f=0; f<updateFcts.length; f++){
+		updateFcts[f]();
+	}
     render();
 
 }
