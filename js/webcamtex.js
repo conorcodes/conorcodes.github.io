@@ -4,8 +4,8 @@ THREEx.WebcamTexture	= function(){
 	//console.assert(THREEx.WebcamTexture.available === true)
 	// create the video element
 	var video	= document.createElement('video');
-	video.width	= 320;
-	video.height	= 240;
+	video.width	= 512;
+	video.height	= 512;
 	video.autoplay	= true;
 	video.loop	= true;
 	// expose video as this.video
