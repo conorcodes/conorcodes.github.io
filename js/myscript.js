@@ -289,7 +289,7 @@ var uppermaterial=null;
 var camera, scene, renderer, geometry, material, mesh;
 
 init();
-animate();
+//animate();
 
 
 function init() {
