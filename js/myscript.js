@@ -11,7 +11,7 @@ $('#svgpaste').on('input propertychange paste', function() {
     pasteText.value = "";
 });
 	
-	var updateFcts = [];
+	
 
 
 		
@@ -368,6 +368,7 @@ var importedOBJ = loader.load( 'obj/BBall_Shoe.obj', 'obj/BBall_Shoe.mtl', funct
 } );
 ////WEBCAM TEXTURE
 var webtex = null;
+	var updateFcts = [];
 
    webtex = new THREEx.WebcamTexture();
    //uppermaterial.map = webtex.texture;
