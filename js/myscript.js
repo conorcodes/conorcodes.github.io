@@ -295,6 +295,7 @@ init();
 function init() {
 
     scene = new THREE.Scene();
+	var updateFcts = [];
 
     camera = new THREE.PerspectiveCamera(50, 1, 1, 10000);
     camera.position.z = 500;
@@ -368,7 +369,7 @@ var importedOBJ = loader.load( 'obj/BBall_Shoe.obj', 'obj/BBall_Shoe.mtl', funct
 } );
 ////WEBCAM TEXTURE
 var webtex = null;
-	var updateFcts = [];
+	
 
    webtex = new THREEx.WebcamTexture();
    //uppermaterial.map = webtex.texture;
